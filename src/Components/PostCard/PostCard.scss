@@ -91,3 +91,25 @@
     }
   }
 }
+
+.comment-list {
+  .border-line {
+    padding: 0.5px;
+    border-radius: 4px;
+    background: $oc-gray-3;
+    margin-left: 0.5rem;
+    margin-right: 0.5rem;
+  }
+  .comment-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0.35rem 1rem;
+    .comment-text {
+    }
+    .comment-writer {
+      font-size: 0.75rem;
+      font-weight: 600;
+    }
+  }
+}

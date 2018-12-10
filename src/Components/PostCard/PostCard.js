@@ -1,7 +1,7 @@
 import axios from 'axios';
 import { Box, Image } from 'grommet';
 import { Favorite, User as UserIcon, Chat, Tip } from 'grommet-icons';
-import React, { Component } from 'react';
+import React, { Component, Fragment } from 'react';
 import { Instagram } from 'react-content-loader';
 import { observer } from 'mobx-react';
 import storage from '../../lib/storage';
@@ -37,8 +37,34 @@ class PostCard extends Component {
     const { value } = this.props;
     const { contents_pic } = value;
 
-    await this.getLike().then(() => this.getImage(contents_pic));
+    await this.getLike();
+    await this.getComment();
+    await this.getImage(contents_pic);
+
+    this.setState({
+      isLoaded: true,
+    });
   }
+
+  componentWillUnmount() {
+    this.setState({
+      commentValue: '',
+    });
+  }
+
+  getComment = async () => {
+    const { value } = this.props;
+    const { postId } = value;
+
+    try {
+      const comments = await axios.get(`/comment`, { params: { postId } });
+      this.setState({
+        commentList: comments.data,
+      });
+    } catch (e) {
+      console.error(e);
+    }
+  };
 
   getLike = async () => {
     const { value } = this.props;
@@ -76,7 +102,6 @@ class PostCard extends Component {
         );
       this.setState({
         imgSrc: img,
-        isLoaded: true,
       });
     } catch (e) {
       console.error(e);
@@ -128,9 +153,29 @@ class PostCard extends Component {
     }
   };
 
-  sendComment = () => {
+  sendComment = async () => {
     const { commentValue } = this.state;
-    console.log(commentValue);
+    const { value } = this.props;
+    const { postId } = value;
+
+    if (!commentValue) return;
+
+    const commentObj = {
+      comment_text: commentValue,
+      postId,
+      writerId: userInfo.userId,
+    };
+
+    try {
+      const commentList = await axios.post('/comment/add', commentObj);
+      this.getComment();
+      console.log(commentList);
+      this.setState({
+        commentValue: '',
+      });
+    } catch (e) {
+      console.error(e);
+    }
   };
 
   render() {
@@ -139,6 +184,15 @@ class PostCard extends Component {
     const { uploadBy, contents_text, key, likeCount } = value;
     const { imgSrc, isLoaded, edit, commentList, commentValue } = this.state;
 
+    const commentMap = commentList.map(element => (
+      <Fragment key={element.commentId}>
+        <div className="comment-item">
+          <span className="comment-text">{element.comment_text}</span>
+          <span className="comment-writer">{element.writerId}</span>
+        </div>
+        <div className="border-line" />
+      </Fragment>
+    ));
     if (isLoaded) {
       return (
         <div className="container">
@@ -165,7 +219,9 @@ class PostCard extends Component {
             </div>
           </div>
           <div className="content">{contents_text}</div>
-          {commentList.length > 1 && <div className="comment-list" />}
+          {commentList.length > 0 && (
+            <div className="comment-list">{commentMap}</div>
+          )}
           <div className={`comment-container ${edit ? 'edit' : ''}`}>
             <input
               placeholder="당신의 의견을 남겨주세요."
