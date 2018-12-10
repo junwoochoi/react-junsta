@@ -1,13 +1,30 @@
 @import '../../styles//utils.scss';
-
+.kIDBNV {
+  height: 100%;
+}
 .auth-wrapper {
   display: flex;
-  justify-content: center;
   height: 100%;
-  .auth-wrapper {
+  .intro-wrapper {
     flex: 1;
+    display: flex;
+    text-align: center;
+    justify-content: center;
+    align-items: center;
+    background: $oc-violet-6;
+    color: white;
+    font-size: 2rem;
+    font-weight: 600;
+    line-height: 2.2rem;
+
+    padding: 4rem;
+    @include media('<medium') {
+      display: none;
+    }
   }
+
   .login-wrapper {
-    flex: 3;
+    display: flex;
+    align-items: center;
   }
 }

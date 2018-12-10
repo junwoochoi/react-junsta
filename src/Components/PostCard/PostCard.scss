@@ -9,26 +9,34 @@
   border-radius: 4px;
   margin: 1rem;
   margin-bottom: 2rem;
+  color: $oc-gray-9;
   @include media('<medium') {
     width: 100%;
     margin: 2rem 0;
   }
-}
-
-.userid {
-  display: flex;
-  padding: 0.5rem;
-  font-size: 1.15em;
-  justify-content: flex-start;
-  align-items: center;
-  font-weight: 700;
-  .user-icon {
-    font-size: 1em;
-    color: black;
-    border-radius: 10rem;
-    background: #eee;
-    padding: 0.1rem;
-    margin: 0.3rem 0.5rem;
+  .userid-container {
+    display: flex;
+    padding: 0.5rem;
+    font-size: 1.15em;
+    justify-content: space-between;
+    align-items: center;
+    font-weight: 700;
+    .user-icon {
+      font-size: 1em;
+      color: black;
+      border-radius: 10rem;
+      background: #eee;
+      padding: 0.1rem;
+      margin: 0.3rem 0.5rem;
+    }
+    .userid {
+      flex: 1;
+      font-size: 0.875rem;
+    }
+    .time {
+      font-size: 0.625rem;
+      font-weight: 400;
+    }
   }
 }
 
@@ -61,10 +69,10 @@
 }
 
 .content {
-  padding: 0 0.5rem;
-  font-size: 0.95rem;
+  display: flex;
+  padding: 1rem;
+  font-size: 0.875rem;
   font-weight: 600;
-  margin-bottom: 2rem;
 }
 
 .comment-container {
@@ -91,6 +99,13 @@
     }
   }
 }
+.like-count {
+  padding-left: 0.5rem;
+  margin-top: 0.25rem;
+  margin-bottom: 0.25rem;
+  font-size: 0.785rem;
+  font-weight: 600;
+}
 
 .comment-list {
   .border-line {
@@ -106,6 +121,7 @@
     align-items: center;
     padding: 0.35rem 1rem;
     .comment-text {
+      margin-right: 0.5rem;
     }
     .comment-writer {
       font-size: 0.75rem;

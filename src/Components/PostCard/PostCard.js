@@ -5,6 +5,7 @@ import React, { Component, Fragment } from 'react';
 import { Instagram } from 'react-content-loader';
 import { observer } from 'mobx-react';
 import storage from '../../lib/storage';
+import { timeSince } from '../../lib/common';
 import './PostCard.scss';
 
 const userInfo = storage.get('loggedInfo');
@@ -17,6 +18,7 @@ class PostCard extends Component {
       contents_pic: '',
       contents_text: '',
       postId: -1,
+      uploadDate: '',
       likeCount: 0,
     },
   };
@@ -181,8 +183,10 @@ class PostCard extends Component {
   render() {
     const { value } = this.props;
     const { isLiked } = this.state;
-    const { uploadBy, contents_text, key, likeCount } = value;
+    const { uploadBy, contents_text, key, likeCount, uploadDate } = value;
     const { imgSrc, isLoaded, edit, commentList, commentValue } = this.state;
+
+    const timeDiff = timeSince(new Date(uploadDate));
 
     const commentMap = commentList.map(element => (
       <Fragment key={element.commentId}>
@@ -196,9 +200,10 @@ class PostCard extends Component {
     if (isLoaded) {
       return (
         <div className="container">
-          <div className="userid">
+          <div className="userid-container">
             <UserIcon className="user-icon" />
-            {uploadBy}
+            <span className="userid">{uploadBy}</span>
+            <span className="time">{`${timeDiff} 전`}</span>
           </div>
           <Image
             src={imgSrc}
@@ -208,15 +213,14 @@ class PostCard extends Component {
             height="100%"
             fit="cover"
           />
+
           <div className="button-container" style={{ dislplay: 'flex' }}>
             <Favorite
               className={`like ${isLiked ? ' liked' : ''}`}
               onClick={this.toggleLike}
             />
             <Tip onClick={this.toggleComment} />
-            <div style={{ marginTop: '0.25rem', marginBottom: '0.5rem' }}>
-              좋아요 {likeCount}개
-            </div>
+            <div className="like-count">좋아요 {likeCount}개</div>
           </div>
           <div className="content">{contents_text}</div>
           {commentList.length > 0 && (
