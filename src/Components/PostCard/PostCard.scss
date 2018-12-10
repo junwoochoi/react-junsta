@@ -1,0 +1,93 @@
+@import '../../styles/utils.scss';
+
+.container {
+  background: white;
+  width: 22rem;
+  display: flex;
+  flex-direction: column;
+  border: 1px solid $oc-gray-4;
+  border-radius: 4px;
+  margin: 1rem;
+  margin-bottom: 2rem;
+  @include media('<medium') {
+    width: 100%;
+    margin: 2rem 0;
+  }
+}
+
+.userid {
+  display: flex;
+  padding: 0.5rem;
+  font-size: 1.15em;
+  justify-content: flex-start;
+  align-items: center;
+  font-weight: 700;
+  .user-icon {
+    font-size: 1em;
+    color: black;
+    border-radius: 10rem;
+    background: #eee;
+    padding: 0.1rem;
+    margin: 0.3rem 0.5rem;
+  }
+}
+
+.button-container {
+  padding: 0.5rem;
+  .like {
+    cursor: pointer;
+    &:hover {
+      & path {
+        fill: $oc-gray-1;
+      }
+    }
+    &:active {
+      & path {
+        fill: $oc-red-9;
+        stroke: $oc-red-9;
+      }
+    }
+  }
+  svg {
+    cursor: pointer;
+    margin-right: 0.25rem;
+    margin-left: 0.25rem;
+  }
+  svg.liked path {
+    fill: $oc-red-7 !important;
+    transition: all 0.3s ease-in;
+    stroke: $oc-red-7;
+  }
+}
+
+.content {
+  padding: 0 0.5rem;
+  font-size: 0.95rem;
+  font-weight: 600;
+  margin-bottom: 2rem;
+}
+
+.comment-container {
+  display: none;
+  &.edit {
+    transition: 0.25s ease-in all;
+    display: flex;
+    align-items: center;
+    border: 1px solid $oc-gray-2;
+    background: $oc-gray-1;
+    margin: 0.5rem;
+    padding-right: 0.5rem;
+    border-radius: 4px;
+    input {
+      all: initial;
+      font: inherit;
+      font-size: 0.875rem;
+      flex: 1;
+      padding: 0.5rem;
+      outline: none;
+    }
+    svg {
+      cursor: pointer;
+    }
+  }
+}

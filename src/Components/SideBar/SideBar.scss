@@ -1,0 +1,32 @@
+@import '../../styles/utils.scss';
+
+.sidebar-wrapper {
+  padding: 1.75rem 0rem;
+
+  .sidebar-item {
+    padding-top: 0.75rem;
+    padding-bottom: 0.75rem;
+    font-size: 1.25rem;
+    padding-left: 1.75rem;
+    display: -ms-flexbox;
+    display: flex;
+    -ms-flex-align: center;
+    align-items: center;
+    color: #33393f;
+    font-weight: 300;
+    &:hover {
+      background: #f5f7f9;
+    }
+    &.active {
+      border-right: 4px solid $oc-violet-7;
+      color: $oc-violet-7;
+      font-weight: 600;
+      svg path {
+        stroke: $oc-violet-7;
+      }
+      svg polygon {
+        stroke: $oc-violet-7;
+      }
+    }
+  }
+}

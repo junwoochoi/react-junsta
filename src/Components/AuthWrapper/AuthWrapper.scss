@@ -1,0 +1,13 @@
+@import '../../styles//utils.scss';
+
+.auth-wrapper {
+  display: flex;
+  justify-content: center;
+  height: 100%;
+  .auth-wrapper {
+    flex: 1;
+  }
+  .login-wrapper {
+    flex: 3;
+  }
+}

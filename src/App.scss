@@ -1,0 +1,26 @@
+@import './styles/utils.scss';
+
+.wrapper {
+  display: flex;
+  height: 100%;
+  .sidebar-box {
+    position: fixed;
+    left: 0;
+    top: 0;
+    display: flex;
+    flex-direction: column;
+    width: 15rem;
+    height: 100%;
+    background: white;
+    @include media('<medium') {
+      display: none;
+    }
+  }
+  .main-box {
+    margin-left: 15rem;
+    width: 100%;
+    @include media('<medium') {
+      margin: 0;
+    }
+  }
+}
