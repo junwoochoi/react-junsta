@@ -4,6 +4,8 @@ import './UploadBox.scss';
 import { inject, observer } from 'mobx-react';
 import { Image as ImageIcon } from 'grommet-icons';
 import { withRouter } from 'react-router-dom';
+import axios from 'axios';
+import AutoComplete from '../AutoComplete';
 import ErrorInfo from '../ErrorInfo';
 import storage from '../../lib/storage';
 
@@ -126,7 +128,6 @@ class UploadBox extends React.Component {
     if (error.code) {
       return <ErrorInfo {...error} />;
     }
-
     return (
       <div className="upload-box">
         <div className="button-wrapper">
@@ -162,7 +163,7 @@ class UploadBox extends React.Component {
 
         <div className="errorMsg">{errorMessage}</div>
 
-        <textarea
+        <AutoComplete
           className="input-upload-text"
           placeholder="설명 입력..."
           value={uploadPost.contents_text}
