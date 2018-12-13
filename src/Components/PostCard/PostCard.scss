@@ -9,7 +9,7 @@
   user-select: none; /* Non-prefixed version, currently
                                   supported by Chrome and Opera */
   background: white;
-  width: 22rem;
+  width: 38rem;
   display: flex;
   flex-direction: column;
   border: 1px solid $oc-gray-4;
@@ -36,9 +36,16 @@
       padding: 0.1rem;
       margin: 0.3rem 0.5rem;
     }
-    .userid {
+    .divider {
       flex: 1;
+    }
+    .userid {
+      font: inherit;
+      background: inherit;
       font-size: 0.875rem;
+      cursor: pointer;
+      border: none;
+      outline: none;
     }
     .time {
       font-size: 0.625rem;
@@ -70,50 +77,78 @@
   }
   svg.liked path {
     fill: $oc-red-7 !important;
-    transition: all 0.3s ease-in;
     stroke: $oc-red-7;
   }
 }
 
 .content {
   display: flex;
-  padding: 1rem;
+  padding-left: 1rem;
+  padding-reight: 1rem;
+  margin-bottom: 1.5rem;
   font-size: 0.875rem;
   font-weight: 600;
 }
-
-.comment-container {
+.comment-wrapper {
   display: none;
   &.edit {
-    transition: 0.25s ease-in all;
-    display: flex;
-    align-items: center;
-    border: 1px solid $oc-gray-2;
-    background: $oc-gray-1;
-    margin: 0.5rem;
-    padding-right: 0.5rem;
-    border-radius: 4px;
-    input {
-      all: initial;
-      font: inherit;
-      font-size: 0.875rem;
-      flex: 1;
-      padding: 0.5rem;
-      outline: none;
-    }
-    svg {
-      cursor: pointer;
+    display: block;
+    .comment-container {
+      transition: 0.25s ease-in all;
+      display: flex;
+      align-items: center;
+      border: 1px solid $oc-gray-2;
+      background: $oc-gray-1;
+      margin: 0.5rem;
+      padding-right: 0.5rem;
+      border-radius: 4px;
+      input {
+        all: initial;
+        font: inherit;
+        font-size: 0.875rem;
+        flex: 1;
+        padding: 0.5rem;
+        outline: none;
+      }
+      svg {
+        cursor: pointer;
+      }
     }
   }
 }
-.like-count {
-  padding-left: 0.5rem;
-  margin-top: 0.25rem;
-  margin-bottom: 0.25rem;
-  font-size: 0.785rem;
-  font-weight: 600;
-}
 
+.content {
+  font-weight: 400;
+
+  .userid {
+    display: flex;
+    justify-content: flex-start;
+    padding-left: 0;
+    align-items: center;
+    background: inherit;
+    font: inherit;
+    font-weight: 600;
+    border: none;
+    outline: none;
+    cursor: pointer;
+  }
+}
+.count-wrapper {
+  margin-top: 0.5rem;
+  .like-count,
+  .comment-count {
+    display: inline;
+    margin-left: 0.5rem;
+    margin-top: 0.25rem;
+    margin-bottom: 0.25rem;
+    font-size: 0.785rem;
+    font-weight: 400;
+  }
+  .comment-count {
+    margin-left: 0.75rem;
+    cursor: pointer;
+  }
+}
 .comment-list {
   .border-line {
     padding: 0.5px;
@@ -133,6 +168,7 @@
     .comment-writer {
       font-size: 0.75rem;
       font-weight: 600;
+      cursor: pointer;
     }
   }
 }

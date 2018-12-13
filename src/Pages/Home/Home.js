@@ -6,6 +6,7 @@ import TagContainer from '../../Containers/TagContainer';
 import AllContainer from '../../Containers/AllContainer';
 import FeedContaier from '../../Containers/FeedContainer';
 import UploadContainer from '../../Containers/UploadContainer';
+import ProfileContainer from '../../Containers/ProfileContainer';
 
 class Home extends Component {
   render() {
@@ -30,6 +31,7 @@ class Home extends Component {
               <Route exact path="/upload" component={UploadContainer} />
               <Route exact path="/all" component={AllContainer} />
               <Route exact path="/tags" component={TagContainer} />
+              {/* <Route exact path="/profile" component={ProfileContainer} /> */}
             </Switch>
           </Box>
         </Grid>

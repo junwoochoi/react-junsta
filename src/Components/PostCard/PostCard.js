@@ -174,6 +174,12 @@ class PostCard extends Component {
     }
   };
 
+  moveToProfile = e => {
+    const profileId = e.target.innerText;
+    console.log(profileId);
+    // history.push(`@${profileId}`);
+  };
+
   render() {
     const { value } = this.props;
     const { isLiked } = this.state;
@@ -196,7 +202,14 @@ class PostCard extends Component {
         <div className="container">
           <div className="userid-container">
             <UserIcon className="user-icon" />
-            <span className="userid">{uploadBy}</span>
+            <button
+              type="button"
+              className="userid"
+              onClick={this.moveToProfile}
+            >
+              {uploadBy}
+            </button>
+            <span className="divider" />
             <span className="time">{`${timeDiff} 전`}</span>
           </div>
           <Image
@@ -214,20 +227,38 @@ class PostCard extends Component {
               onClick={this.toggleLike}
             />
             <Tip onClick={this.toggleComment} />
-            <div className="like-count">좋아요 {likeCount}개</div>
+            <div className="count-wrapper">
+              <div className="like-count">
+                좋아요 <b>{likeCount}</b>개
+              </div>
+              <div className="comment-count" onClick={this.toggleComment}>
+                댓글 <b>{commentList.length}</b>개
+              </div>
+            </div>
           </div>
-          <div className="content">{contents_text}</div>
-          {commentList.length > 0 && (
-            <div className="comment-list">{commentMap}</div>
-          )}
-          <div className={`comment-container ${edit ? 'edit' : ''}`}>
-            <input
-              placeholder="당신의 의견을 남겨주세요."
-              value={commentValue}
-              onChange={this.handleChange}
-              onKeyPress={this.handleKeyPress}
-            />
-            <Chat onClick={this.sendComment} />
+          <div className="content">
+            <button
+              type="button"
+              className="userid"
+              onClick={this.moveToProfile}
+            >
+              {uploadBy}
+            </button>
+            {contents_text}
+          </div>
+          <div className={`comment-wrapper ${edit ? 'edit' : ''}`}>
+            {commentList.length > 0 && (
+              <div className="comment-list">{commentMap}</div>
+            )}
+            <div className="comment-container">
+              <input
+                placeholder="당신의 의견을 남겨주세요."
+                value={commentValue}
+                onChange={this.handleChange}
+                onKeyPress={this.handleKeyPress}
+              />
+              <Chat onClick={this.sendComment} />
+            </div>
           </div>
         </div>
       );
