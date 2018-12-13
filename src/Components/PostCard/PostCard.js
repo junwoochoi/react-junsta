@@ -1,11 +1,17 @@
-import axios from 'axios';
-import { Box, Image } from 'grommet';
+import { Image } from 'grommet';
 import { Favorite, User as UserIcon, Chat, Tip } from 'grommet-icons';
 import React, { Component, Fragment } from 'react';
 import { Instagram } from 'react-content-loader';
 import { observer } from 'mobx-react';
 import storage from '../../lib/storage';
 import { timeSince } from '../../lib/common';
+import {
+  getCommentList,
+  getImage as getImageFromServer,
+  liketoggle,
+  addComment,
+  checkLiked,
+} from '../../lib/api/post';
 import './PostCard.scss';
 
 const userInfo = storage.get('loggedInfo');
@@ -59,7 +65,7 @@ class PostCard extends Component {
     const { postId } = value;
 
     try {
-      const comments = await axios.get(`/comment`, { params: { postId } });
+      const comments = await getCommentList(postId);
       this.setState({
         commentList: comments.data,
       });
@@ -72,36 +78,24 @@ class PostCard extends Component {
     const { value } = this.props;
     const { postId } = value;
     if (postId !== -1) {
-      await axios
-        .get('/post/like/check', {
-          params: { userId: userInfo.userId, postId },
-        })
-        .then(res => {
-          this.setState({
-            isLiked: res.data,
-          });
+      await checkLiked({ userId: userInfo.userId, postId }).then(res => {
+        this.setState({
+          isLiked: res.data,
         });
+      });
     }
   };
 
   getImage = async imageName => {
     const { value } = this.props;
     try {
-      const img = await axios
-        .post(
-          '/post/image',
-          { fileName: imageName },
-          {
-            responseType: 'arraybuffer',
-          },
-        )
-        .then(
-          response =>
-            `data:image/png;base64, ${Buffer.from(
-              response.data,
-              'binary',
-            ).toString('base64')}`,
-        );
+      const img = await getImageFromServer(imageName).then(
+        response =>
+          `data:image/png;base64, ${Buffer.from(
+            response.data,
+            'binary',
+          ).toString('base64')}`,
+      );
       this.setState({
         imgSrc: img,
       });
@@ -124,7 +118,7 @@ class PostCard extends Component {
       userId: userInfo.userId,
       postId,
     };
-    await axios.post('/post/like/toggle', data).then(() => {
+    await liketoggle(data).then(() => {
       if (isLiked) {
         value.likeCount -= 1;
       } else {
@@ -169,7 +163,7 @@ class PostCard extends Component {
     };
 
     try {
-      const commentList = await axios.post('/comment/add', commentObj);
+      const commentList = await addComment(commentObj);
       this.getComment();
       console.log(commentList);
       this.setState({

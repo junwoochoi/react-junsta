@@ -1,5 +1,11 @@
 import { observable, action } from 'mobx';
-import axios from 'axios';
+import {
+  checkIdExist,
+  checkAuth,
+  registerUser,
+  logout as logoutApi,
+  loginUser as loginUserApi,
+} from '../lib/api/user';
 
 class AuthStore {
   constructor(root) {
@@ -55,22 +61,22 @@ class AuthStore {
   };
 
   @action checkUserIdExists = userId =>
-    axios.get(`/user/exists?userId=${userId}`).then(res => {
+    checkIdExist(userId).then(res => {
       this.exists.userId = res.data.exists;
     });
 
-  @action checkStatus = () => axios.get('/post/checkAuth');
+  @action checkStatus = () => checkAuth();
 
   @action registerUser = ({ userId, userName, password }) =>
-    axios.post('/user/signup', { userId, userName, password }).then(res => {
+    registerUser({ userId, userName, password }).then(res => {
       this.result.register = res;
     });
 
   @action loginUser = ({ userId, password }) =>
-    axios.post('/user/login', { userId, password }).then(res => {
+    loginUserApi({ userId, password }).then(res => {
       this.result.login = res;
     });
 
-  @action logout = () => axios.post('/user/logout');
+  @action logout = () => logoutApi();
 }
 export default AuthStore;

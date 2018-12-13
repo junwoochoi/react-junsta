@@ -1,5 +1,6 @@
 import { action, observable } from 'mobx';
-import axios from 'axios';
+import { getFollowing, toggleFollowing } from '../lib/api/user';
+import { sendUploadData } from '../lib/api/post';
 
 class PostStore {
   constructor(root) {
@@ -19,16 +20,13 @@ class PostStore {
 
   @action
   getFollowingUserList = async userId => {
-    const res = await axios.get('/post/follow/check', { params: { userId } });
+    const res = await getFollowing(userId);
     this.followingUserList = res.data;
   };
 
   @action
   toggleFollowingUser = async ({ userId, writerId }) => {
-    await axios.post('/post/follow', {
-      followUserId: userId,
-      followedUserId: writerId,
-    });
+    await toggleFollowing({ userId, writerId });
     await this.getFollowingUserList(userId);
   };
 
@@ -38,7 +36,7 @@ class PostStore {
   };
 
   @action onSendUploadData = ({ formData, header }) =>
-    axios.post('/post/upload', formData, header);
+    sendUploadData({ formData, header });
 
   @observable
   postList = [];

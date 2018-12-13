@@ -1,8 +1,7 @@
 import React, { Component } from 'react';
-import axios from 'axios';
 import { observer } from 'mobx-react';
+import { getAllPost } from '../../lib/api/post';
 import PostCard from '../../Components/PostCard';
-import storage from '../../lib/storage';
 import './AllContainer.scss';
 
 @observer
@@ -27,19 +26,12 @@ class AllContainer extends Component {
 
   getPostList = () => {
     const { postList, startIndex, limit } = this.state;
-    axios
-      .get(`/post/all`, {
-        params: {
-          startIndex,
-          limit,
-        },
-      })
-      .then(res => {
-        this.setState({
-          postList: postList.concat(res.data),
-          startIndex: startIndex + limit,
-        });
+    getAllPost({ startIndex, limit }).then(res => {
+      this.setState({
+        postList: postList.concat(res.data),
+        startIndex: startIndex + limit,
       });
+    });
   };
 
   handleScroll = e => {

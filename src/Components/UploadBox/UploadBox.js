@@ -1,10 +1,9 @@
 import React from 'react';
-import { Box, Image, Button, TextInput } from 'grommet';
+import { Image } from 'grommet';
 import './UploadBox.scss';
 import { inject, observer } from 'mobx-react';
 import { Image as ImageIcon } from 'grommet-icons';
 import { withRouter } from 'react-router-dom';
-import axios from 'axios';
 import AutoComplete from '../AutoComplete';
 import ErrorInfo from '../ErrorInfo';
 import storage from '../../lib/storage';

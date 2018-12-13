@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import './AutoComplete.scss';
 import debounce from 'lodash/debounce';
-import axios from 'axios';
+import { getHashTagList } from '../../lib/api/post';
 
 class AutoComplete extends Component {
   constructor(props) {
@@ -33,11 +33,7 @@ class AutoComplete extends Component {
       return;
     }
     try {
-      const response = await axios.get('/hashtag/list', {
-        params: {
-          keyword: tag,
-        },
-      });
+      const response = await getHashTagList(tag);
       if (response.status === 200) {
         console.log(response.data);
         this.setState({

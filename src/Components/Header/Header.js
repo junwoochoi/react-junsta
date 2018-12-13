@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { Button, Box } from 'grommet';
 import { Upload } from 'grommet-icons';
 import { withRouter } from 'react-router-dom';
-import axios from 'axios';
+import { logout } from '../../lib/api/user';
 
 class Header extends Component {
   handleUploadBtn = () => {
@@ -14,7 +14,7 @@ class Header extends Component {
     try {
       const { history } = this.props;
 
-      await axios.post('/user/logout');
+      await logout();
       history.push('/auth/login');
     } catch (e) {
       console.error(e);
