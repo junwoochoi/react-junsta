@@ -31,7 +31,7 @@ class Home extends Component {
               <Route exact path="/upload" component={UploadContainer} />
               <Route exact path="/all" component={AllContainer} />
               <Route exact path="/tags" component={TagContainer} />
-              {/* <Route exact path="/profile" component={ProfileContainer} /> */}
+              <Route path="/profile/@:userId" component={ProfileContainer} />
             </Switch>
           </Box>
         </Grid>

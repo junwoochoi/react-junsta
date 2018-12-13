@@ -15,3 +15,6 @@ export const toggleFollowing = ({ userId, writerId }) =>
     followUserId: userId,
     followedUserId: writerId,
   });
+
+export const getUserInfo = userId =>
+  axios.get('/user/userInfo', { params: { userId } });

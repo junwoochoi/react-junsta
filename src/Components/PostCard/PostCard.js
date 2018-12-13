@@ -3,6 +3,7 @@ import { Favorite, User as UserIcon, Chat, Tip } from 'grommet-icons';
 import React, { Component, Fragment } from 'react';
 import { Instagram } from 'react-content-loader';
 import { observer } from 'mobx-react';
+import { withRouter } from 'react-router-dom';
 import storage from '../../lib/storage';
 import { timeSince } from '../../lib/common';
 import {
@@ -175,9 +176,9 @@ class PostCard extends Component {
   };
 
   moveToProfile = e => {
+    const { history } = this.props;
     const profileId = e.target.innerText;
-    console.log(profileId);
-    // history.push(`@${profileId}`);
+    history.push(`/profile/@${profileId}`);
   };
 
   render() {
@@ -272,4 +273,4 @@ class PostCard extends Component {
   }
 }
 
-export default PostCard;
+export default withRouter(PostCard);
