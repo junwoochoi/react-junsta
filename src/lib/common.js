@@ -1,3 +1,5 @@
+import storage from './storage';
+
 export const timeSince = date => {
   const seconds = Math.floor((new Date() - date) / 1000);
 
@@ -24,3 +26,5 @@ export const timeSince = date => {
   }
   return `${Math.floor(seconds)} 초`;
 };
+
+export const getUserId = () => storage.get('loggedInfo').userId;
