@@ -27,4 +27,9 @@ export const timeSince = date => {
   return `${Math.floor(seconds)} 초`;
 };
 
-export const getUserId = () => storage.get('loggedInfo').userId;
+export const getUserId = () => {
+  if(storage.get('loggedInfo')){
+    return storage.get('loggedInfo').userId;
+  }
+  return null;
+}
